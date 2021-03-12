@@ -1,0 +1,24 @@
+{
+  "name": "sf_oopapp",
+  "version": "1.0.0",
+  "description": "Skillfactory educational project. Pure JS web-app  written with OOP.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ledvanoff/sf_oopapp.git"
+  },
+  "keywords": [
+    "skillfactory",
+    "js",
+    "oop"
+  ],
+  "author": "Oleg Ledvanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ledvanoff/sf_oopapp/issues"
+  },
+  "homepage": "https://github.com/ledvanoff/sf_oopapp#readme"
+}
