@@ -1,5 +1,5 @@
 import { BaseModel } from "./BaseModel";
-import { getFromStorage, addToStorage } from "../utils";
+import { getFromStorage, addToStorage } from "../utils/utils";
 
 export class User extends BaseModel {
   constructor(login, password) {

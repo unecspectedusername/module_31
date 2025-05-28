@@ -1,0 +1,38 @@
+@mixin flex($direction: row, $align: center) {
+  display: flex;
+
+  @if ($direction == row) {
+    flex-direction: row;
+  } @else if($direction == column) {
+    flex-direction: column;
+  }
+
+  @if ($align == center) {
+    align-items: center;
+  } @else if($direction == left) {
+    align-items: flex-start;
+  }
+}
+
+@mixin flex-center($direction: row, $align: center) {
+  @include flex($direction, $align);
+  justify-content: center;
+}
+
+@mixin flex-between($direction: row, $align: center) {
+  @include flex($direction, $align);
+  justify-content: space-between;
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}

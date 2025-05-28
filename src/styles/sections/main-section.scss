@@ -1,0 +1,14 @@
+@use '../variables' as *;
+
+.main-section {
+  width: 100%;
+  height: calc(100vh - ($header-height * 2));
+  overflow-y: auto;
+  background: var(--color-light-blue);
+
+  &__header {
+    color: white;
+    margin: 2rem;
+    text-align: center;
+  }
+}

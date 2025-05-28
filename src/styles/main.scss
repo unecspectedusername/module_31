@@ -1,0 +1,9 @@
+@use 'normalize';
+@use 'globals';
+@use 'fonts';
+
+@use 'sections/header';
+@use 'sections/footer';
+@use 'sections/main-section';
+
+@use 'blocks/kanban-board';

@@ -353,3 +353,7 @@ tmpnodejsnpm-cache/
 
 # PHPStorm
 .idea/
+
+.DS_Store
+*/.DS_Store
+package-lock.json

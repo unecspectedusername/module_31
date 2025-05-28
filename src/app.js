@@ -1,15 +1,15 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/style.css";
+import "./styles/main.scss"
 import taskFieldTemplate from "./templates/taskField.html";
 import noAccessTemplate from "./templates/noAccess.html";
 import { User } from "./models/User";
-import { generateTestUser } from "./utils";
+import { generateTestUser } from "./utils/utils";
 import { State } from "./state";
 import { authUser } from "./services/auth";
+import {addDragAndDrop} from "./utils/dragndrop";
 
 export const appState = new State();
 
-const loginForm = document.querySelector("#app-login-form");
+const loginForm = document.querySelector("#login-form");
 
 generateTestUser(User);
 
@@ -19,9 +19,13 @@ loginForm.addEventListener("submit", function (e) {
   const login = formData.get("login");
   const password = formData.get("password");
 
-  let fieldHTMLContent = authUser(login, password)
-    ? taskFieldTemplate
-    : noAccessTemplate;
-
-  document.querySelector("#content").innerHTML = fieldHTMLContent;
+  const content = document.querySelector("#content");
+  if (authUser(login, password)) {
+      content.innerHTML = taskFieldTemplate;
+      addDragAndDrop();
+  } else {
+    content.innerHTML = noAccessTemplate;
+  }
 });
+
+addDragAndDrop();

@@ -1,0 +1,71 @@
+@use '../helpers/mixins' as *;
+@use '../variables' as *;
+
+$padding: 0.75rem;
+$column-border-radius: 1rem;
+$task-border-radius: 0.3rem;
+
+.kanban-board {
+  @include flex-center(row, center);
+  gap: $gap;
+  padding: $gap;
+  align-items: flex-start;
+  height: 100%;
+
+  &__column {
+    @include flex(column, left);
+    justify-content: start;
+    width: 100%;
+    max-height: 100%;
+    background: var(--color-light-grey);
+    border-radius: $column-border-radius;
+    padding: $padding;
+    overflow: hidden;
+    transition: opacity 0.4s ease-out;
+  }
+
+  &__column-header {
+    font-size: 1rem;
+  }
+
+  &__task-list {
+    overflow-y: scroll;
+    @include flex(column, center);
+    justify-content: start;
+    gap: 1rem;
+    margin-block: 1rem;
+  }
+
+  &__task {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--color-white);
+    border-radius: $task-border-radius;
+  }
+
+  &__button {
+    text-align: left;
+    width: fit-content;
+  }
+
+  .placeholder {
+    border: 2px dashed #aaa;
+    border-radius: $task-border-radius;
+    transition: height 0.2s ease;
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .is-dragging {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+  }
+
+  .disabled {
+    opacity: 0.3;
+  }
+}

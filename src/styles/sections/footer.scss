@@ -1,0 +1,12 @@
+@use "../helpers/mixins" as *;
+@use "../variables" as *;
+
+footer {
+  @include flex-between();
+  height: $header-height;
+
+  .tasks-counter {
+    gap: $gap;
+    @include flex();
+  }
+}

@@ -1,0 +1,15 @@
+@use "../helpers/mixins" as *;
+@use "../variables" as *;
+
+.header {
+  @include flex-between();
+  height: $header-height;
+}
+
+.navigation {
+
+  &__link {
+    text-decoration: none;
+    color: var(--color-white);
+  }
+}
