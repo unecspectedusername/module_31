@@ -10,6 +10,11 @@ class DragManager {
         // колонки, в которые задачу нельзя вставить по логике задания
         this.forbiddenColumns = [];
 
+        // Защита от "прилипания" задачи к курсору
+        this._mouseDownX = 0;
+        this._mouseDownY = 0;
+        this._mouseMoveThreshold = 5;
+
         // Привязываем методы к текущему экземпляру
         this.onMouseMove = this.doWhileMoving.bind(this);
         this.onMouseUp = this.finish.bind(this);
@@ -123,14 +128,60 @@ class DragManager {
     }
 
     makeDraggable(element) {
+        // Метод добавляет возможность перетаскивать элемент списка.
+        // Я добавил защиту от "прилипания" задачи к курсору.
+        // Перетаскивание срабатывает только если зажать кнопку мыши (или дотронуться на сенсорном экране)
+        // и потянуть в сторону на несколько пикселей (значение задано в this._mouseMoveThreshold)
         element.addEventListener('mousedown', (e) => {
-            this.start(element, e.clientX, e.clientY);
+            this._mouseDownX = e.clientX;
+            this._mouseDownY = e.clientY;
+
+            const onMouseMoveInit = (moveEvent) => {
+                const dx = Math.abs(moveEvent.clientX - this._mouseDownX);
+                const dy = Math.abs(moveEvent.clientY - this._mouseDownY);
+                if (dx > this._mouseMoveThreshold || dy > this._mouseMoveThreshold) {
+                    document.removeEventListener('mousemove', onMouseMoveInit);
+                    document.removeEventListener('mouseup', onMouseUpInit);
+
+                    this.start(element, moveEvent.clientX, moveEvent.clientY);
+                }
+            };
+
+            const onMouseUpInit = () => {
+                document.removeEventListener('mousemove', onMouseMoveInit);
+                document.removeEventListener('mouseup', onMouseUpInit);
+            };
+
+            document.addEventListener('mousemove', onMouseMoveInit);
+            document.addEventListener('mouseup', onMouseUpInit);
         });
 
         element.addEventListener('touchstart', (e) => {
-            e.preventDefault();
             const touch = e.touches[0];
-            this.start(element, touch.clientX, touch.clientY);
+            this._isMouseDown = true;
+            this._mouseDownX = touch.clientX;
+            this._mouseDownY = touch.clientY;
+
+            const onTouchMoveInit = (moveEvent) => {
+                const touchMove = moveEvent.touches[0];
+                const dx = Math.abs(touchMove.clientX - this._mouseDownX);
+                const dy = Math.abs(touchMove.clientY - this._mouseDownY);
+                if (dx > this._mouseMoveThreshold || dy > this._mouseMoveThreshold) {
+                    document.removeEventListener('touchmove', onTouchMoveInit);
+                    document.removeEventListener('touchend', onTouchEndInit);
+
+                    this.start(element, touchMove.clientX, touchMove.clientY);
+                }
+            };
+
+            const onTouchEndInit = () => {
+                this._isMouseDown = false;
+                document.removeEventListener('touchmove', onTouchMoveInit);
+                document.removeEventListener('touchend', onTouchEndInit);
+            };
+
+            document.addEventListener('touchmove', onTouchMoveInit);
+            document.addEventListener('touchend', onTouchEndInit);
         });
     }
 }
