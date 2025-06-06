@@ -1,4 +1,9 @@
-class DragManager {
+import {appState} from "../app";
+import Column from "../models/KanbanBoard/Column";
+import TaskList from "../models/KanbanBoard/TaskList";
+import DOMObject from "../models/KanbanBoard/DOMObject";
+
+export class DragManager {
     constructor() {
         // задача, которую перетаскиваем в данный момент
         this.draggedTask = null;
@@ -6,9 +11,12 @@ class DragManager {
         // зарезервированное поле в таск-листе, в которое можно вставить элемент (на странице выделяется пунктирным border.
         this.placeholder = null;
         // колонка kanban из которой мы вытянули задачу
-        this.parentColumn = null;
+        this.oldColumn = null;
+        // список, в который мы поместили задачу
+        this.newList = null;
         // колонки, в которые задачу нельзя вставить по логике задания
         this.forbiddenColumns = [];
+        // Информация о старой колонке (где задача лежала до того, как ее перетащили) и новой.
 
         // Защита от "прилипания" задачи к курсору
         this._mouseDownX = 0;
@@ -27,7 +35,7 @@ class DragManager {
 
     start(task, clientX, clientY) {
         this.draggedTask = task;
-        this.parentColumn = task.closest('.kanban-board__column');
+        this.oldColumn = task.closest('.kanban-board__column');
         const rect = task.getBoundingClientRect();
         this.shiftY = clientY - rect.top;
 
@@ -59,14 +67,14 @@ class DragManager {
         const elemBelow = document.elementFromPoint(clientX, clientY);
         this.draggedTask.hidden = false;
 
-        // По условиям задания, задачи можно помещать только в слудующую по счету колонку
-        // т.е. нельзя поместить задачу из первой колонки сразу в третюю или четвертую,
+        // По условиям задания, задачи можно помещать только в следующую по счету колонку
+        // т.е. нельзя поместить задачу из первой колонки сразу в третью или четвертую,
         // они должны перемещаться последовательно.
         // Поэтому создаем список "запрещенных" колонок, в которые задачу вставить нельзя.
         // В условиях не сказано про перемещение назад, поэтому
         // я сделал возможным перемещение назад в любую колонку.
         const columns = [...document.querySelectorAll('.kanban-board__column')];
-        this.forbiddenColumns = columns.filter(c => columns.indexOf(c) > columns.indexOf(this.parentColumn) + 1);
+        this.forbiddenColumns = columns.filter(c => columns.indexOf(c) > columns.indexOf(this.oldColumn) + 1);
         this.forbiddenColumns.forEach(c => c.classList.add('disabled'));
 
         const columnBelow = elemBelow.closest('.kanban-board__column');
@@ -100,6 +108,9 @@ class DragManager {
         if (!inserted) {
             listBelow.appendChild(this.placeholder);
         }
+
+        // Сохраняем информацию о том, в какой список вставили задачу на будущее
+        this.newList = listBelow
     }
 
     finish() {
@@ -108,9 +119,10 @@ class DragManager {
             this.placeholder.parentNode.insertBefore(this.draggedTask, this.placeholder);
             this.placeholder.remove();
             this.placeholder = null;
+            appState.instanceManager.updateInstanceChildList(this.draggedTask, this.oldColumn, this.newList);
         }
 
-        // ничего не делаем, если не выбрали место
+        // ничего не делаем, если не выбрали место для вставки задачи
         if (this.draggedTask) {
             this.draggedTask.removeAttribute('style');
             this.draggedTask.classList.remove('is-dragging');
@@ -203,10 +215,3 @@ function findClosestElement(startElement, selector) {
     return startElement?.querySelector?.(selector) || startElement?.closest?.(selector);
 }
 
-export function addDragAndDrop() {
-    const dragManager = new DragManager();
-    const tasks = document.querySelectorAll('.kanban-board__task');
-    tasks.forEach(task => {
-        dragManager.makeDraggable(task);
-    });
-}

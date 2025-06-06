@@ -1,17 +1,19 @@
 import "./styles/main.scss"
 import taskFieldTemplate from "./templates/taskField.html";
 import noAccessTemplate from "./templates/noAccess.html";
+import defaultTemplate from "./templates/defaultPage.html";
 import { User } from "./models/User";
-import { generateTestUser } from "./utils/utils";
+import {changeContent, generateTestUser} from "./utils/utils";
 import { State } from "./state";
 import { authUser } from "./services/auth";
-import {addDragAndDrop} from "./utils/dragndrop";
+import Board from "./models/KanbanBoard/Board";
 
 export const appState = new State();
 
 const loginForm = document.querySelector("#login-form");
 
 generateTestUser(User);
+changeContent(defaultTemplate);
 
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -19,13 +21,21 @@ loginForm.addEventListener("submit", function (e) {
   const login = formData.get("login");
   const password = formData.get("password");
 
-  const content = document.querySelector("#content");
   if (authUser(login, password)) {
-      content.innerHTML = taskFieldTemplate;
-      addDragAndDrop();
+    const user = appState.currentUser;
+    const data = appState.data;
+    Board.assemble(user, data);
   } else {
-    content.innerHTML = noAccessTemplate;
+    changeContent(noAccessTemplate)
   }
 });
 
-addDragAndDrop();
+function instantLogin() {
+  const loginForm = document.querySelector('#login-form > input[type=text]:nth-child(1)');
+  const passwordForm = document.querySelector('#login-form > input[type=password]:nth-child(2)');
+  const button = document.querySelector('#login-form > button');
+  loginForm.value = 'test';
+  passwordForm.value = 'qwerty123';
+  button.click();
+}
+instantLogin();

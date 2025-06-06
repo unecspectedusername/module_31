@@ -5,7 +5,7 @@ footer {
   @include flex-between();
   height: $header-height;
 
-  .tasks-counter {
+  .counters-wrapper {
     gap: $gap;
     @include flex();
   }
