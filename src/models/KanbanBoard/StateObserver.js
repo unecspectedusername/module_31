@@ -1,5 +1,5 @@
 export default class StateObserver {
-    constructor() {
-        this.columns = [];
-    }
+  constructor() {
+    this.columns = [];
+  }
 }

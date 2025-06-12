@@ -1,5 +1,5 @@
-import { appState } from "../app";
-import { User } from "../models/User";
+import {appState} from "../app";
+import {User} from "../models/User";
 import Data from "../models/Data";
 
 export const authUser = function (login, password) {
@@ -7,5 +7,6 @@ export const authUser = function (login, password) {
   if (!user.hasAccess) return false;
   appState.currentUser = user;
   appState.data = new Data(user);
+  appState.instanceMap.clear();
   return true;
 };

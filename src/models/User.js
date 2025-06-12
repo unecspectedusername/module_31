@@ -1,6 +1,6 @@
-import { BaseModel } from "./BaseModel";
-import { getFromStorage, addToStorage } from "../utils/utils";
-import Data from "./Data";
+import {BaseModel} from "./BaseModel";
+import {getFromStorage, addToStorage} from "../utils/utils";
+import {appState} from "../app";
 
 export class User extends BaseModel {
   constructor(login, password) {
@@ -9,18 +9,22 @@ export class User extends BaseModel {
     this.password = password;
     this.storageKey = "users";
   }
+
   get hasAccess() {
-    let users = getFromStorage(this.storageKey);
+    let users = appState.storageManager.getFromStorage(this.storageKey);
     if (users.length == 0) return false;
     for (let user of users) {
-      if (user.login == this.login && user.password == this.password)
+      if (user.login === this.login && user.password === this.password) {
+        this.id = user.id;
         return true;
+      }
     }
     return false;
   }
+
   static save(user) {
     try {
-      addToStorage(user, user.storageKey);
+      appState.storageManager.addToStorage(user, user.storageKey);
       return true;
     } catch (e) {
       throw new Error(e);

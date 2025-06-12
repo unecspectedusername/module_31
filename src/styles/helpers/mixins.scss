@@ -3,13 +3,13 @@
 
   @if ($direction == row) {
     flex-direction: row;
-  } @else if($direction == column) {
+  } @else if ($direction == column) {
     flex-direction: column;
   }
 
   @if ($align == center) {
     align-items: center;
-  } @else if($direction == left) {
+  } @else if ($direction == left) {
     align-items: flex-start;
   }
 }

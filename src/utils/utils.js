@@ -1,22 +1,26 @@
+import {appState} from "../app";
+
 export const getFromStorage = function (key) {
   return JSON.parse(localStorage.getItem(key) || "[]");
 };
 
 export const addToStorage = function (obj, key) {
-  const storageData = getFromStorage(key);
+  const storageData = appState.storageManager.getFromStorage(key);
   storageData.push(obj);
   localStorage.setItem(key, JSON.stringify(storageData));
 };
 
 export const generateTestUser = function (User) {
   localStorage.clear();
-  const testUser = new User("test", "qwerty123");
+  const testUser = new User("test", "123");
+  const secondUser = new User('test2', '123')
   User.save(testUser);
+  User.save(secondUser);
 };
 
 export function debounce(func, wait) {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
