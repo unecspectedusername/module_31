@@ -1,12 +1,12 @@
-import {appState} from "../app";
-import Column from "../models/KanbanBoard/Column";
-import TaskList from "../models/KanbanBoard/TaskList";
-import DOMObject from "../models/KanbanBoard/DOMObject";
+import {appState, storageManager} from "../app";
+import {EVENTS} from "@core/events";
 
 class DragManager {
   constructor() {
     // задача, которую перетаскиваем в данный момент
     this.draggedTask = null;
+    // ее контроллер
+    this.draggedTaskController = null;
     this.shiftY = 0;
     // зарезервированное поле в таск-листе, в которое можно вставить элемент (на странице выделяется пунктирным border.
     this.placeholder = null;
@@ -37,6 +37,7 @@ class DragManager {
 
   start(task, clientX, clientY) {
     this.draggedTask = task;
+    this.draggedTaskController = appState.instanceManager.getController(task);
     this.oldColumn = task.closest('.kanban-board__column');
     const rect = task.getBoundingClientRect();
     this.shiftY = clientY - rect.top;
@@ -44,6 +45,7 @@ class DragManager {
     this.placeholder = createPlaceholder(rect.height, rect.width);
 
     task.style.width = `${rect.width}px`;
+    this.draggedTaskController.markAsDragged();
     task.classList.add('is-dragging');
 
     // выключаем выделение текста на странице на время перетаскивания задачи
@@ -128,20 +130,16 @@ class DragManager {
       this.placeholder = null;
 
       // обновляем ссылки в контроллерах старого и нового списков задач
-      appState.instanceManager.updateInstanceChildList(this.draggedTask, index, this.oldColumn, this.newList);
-
-      // removeme
-      // appState.eventBus.emit('task:moved', {
-      //   task: this.draggedTask,
-      //   oldColumn: this.oldColumn,
-      //   newListL: this.newList
-      // })
+      appState.instanceManager.moveAfterDND(this.draggedTask, this.newList, index);
+      appState.eventBus.emit(EVENTS.TASK_LIST_UPDATED);
     }
 
     // ничего не делаем, если не выбрали место для вставки задачи
     if (this.draggedTask) {
       this.draggedTask.removeAttribute('style');
       this.draggedTask.classList.remove('is-dragging');
+      this.draggedTaskController.unmarkAsDragged();
+      this.draggedTaskController = null;
       this.draggedTask = null;
     }
 

@@ -16,8 +16,4 @@ export class Component {
   placeLink(linkToPlace, index) {
     this.savedLinks.splice(index, 0, linkToPlace);
   }
-
-  getSavedLinks() {
-    return this.savedLinks;
-  }
 }

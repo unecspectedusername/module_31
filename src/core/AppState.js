@@ -1,13 +1,11 @@
-import Data from "./models/Data";
-import InstanceManager from "./core/InstanceManager";
-import {EventEmitter} from "./core/EventEmitter";
-import {AppStorageManager} from "./core/AppStorageManager";
+import Data from "./Data";
+import InstanceManager from "./InstanceManager";
+import {EventEmitter} from "./EventEmitter";
 
-export class State {
+export class AppState {
   constructor() {
     this.currentUser = null;
     this.eventBus = new EventEmitter();
-    this.storageManager = new AppStorageManager();
     this.data = null;
     this.defaultColumnSet = [
       'Backlog',
@@ -28,5 +26,17 @@ export class State {
 
   get currentUser() {
     return this._currentUser;
+  }
+
+  clear() {
+    this.currentUser = null;
+    this.data.unsubscribe();
+    this.data = null;
+    for (const controller of this.instanceMap.values()) {
+      controller.remove();
+    }
+    this.eventBus.unsubscribeEveryone();
+    this.instanceMap.clear();
+    this.blurFired = false;
   }
 }

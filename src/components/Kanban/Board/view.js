@@ -1,6 +1,4 @@
-import {View} from "../../../core/View";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
+import {View} from "@core/View";
 
 export class BoardView extends View{
   constructor() {

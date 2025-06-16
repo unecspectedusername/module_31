@@ -1,7 +1,8 @@
-import {Controller} from "../../../core/Controller";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
-import {initDropDown} from "../DropDown";
+import {Controller} from "@core/Controller";
+import {appState} from "@src/app";
+import {EVENTS} from "@core/events";
+import {initDropDown} from '@components/Kanban/DropDown';
+import {TaskListController} from "@components/Kanban/TaskList/controller";
 
 export class ButtonController extends Controller {
   constructor(view, model) {
@@ -9,31 +10,16 @@ export class ButtonController extends Controller {
 
     this.dropDown = null;
 
-    this.checkColumn();
-
-    // когда доска готова, добавляем обработчики
-    appState.eventBus.on(EVENTS.BOARD_RENDERED, () => {
-
-      appState.eventBus.on(EVENTS.COLUMN_NOT_EMPTY, (data) => {
-        // если колонка первая, всегда ставим дефолтное состояние кнопки
-        if (this.model.index === 0) {
-          this.view.setDefaultState();
-        }
-
-        // Если в предыдущей колонке появились задачи, добавляем дропдаун
-        if (this.model.index - 1 === data.columnIndex) {
-          this.dropDown = initDropDown(this.model.index);
-          this.view.setDropDownState(this.dropDown.view.element);
-        }
-      })
-
-      appState.eventBus.on(EVENTS.TASK_UPDATED, (data) => {
+    this.subscribe(EVENTS.BOARD_RENDERED, () => {
+      this.checkColumn();
+      this.subscribe(EVENTS.TASK_IS_DRAGGED, () => this.view.setDefaultState());
+      this.subscribe(EVENTS.TASK_LIST_UPDATED, () => this.checkColumn());
+      this.subscribe(EVENTS.TASK_UPDATED, (data) => {
         if (data.columnIndex === this.model.index) {
           this.view.setDefaultState();
         }
-      })
-
-      appState.eventBus.on(EVENTS.TASK_IS_IN_FOCUS, (data) => {
+      });
+      this.subscribe(EVENTS.TASK_IS_IN_FOCUS, (data) => {
         if (data.columnIndex === this.model.index) {
           this.view.setSubmitState();
         }
@@ -52,10 +38,7 @@ export class ButtonController extends Controller {
   }
 
   init() {
-    const self = this;
-    this.view.addEventListener('click', () => {
-      self.handleClick()
-    });
+    this.view.addButtonListener('click', () => this.handleClick());
   }
 
   checkColumn() {
@@ -64,12 +47,13 @@ export class ButtonController extends Controller {
       this.view.setDefaultState()
       return;
     }
-    const data = appState.data.stored.content;
-    const previousColumnTasks = data[this.model.index - 1].tasks;
+    const leftColumn = appState.instanceManager.findInstanceByIndex(TaskListController, this.model.index - 1);
+    const leftColumnTasks = leftColumn._savedLinks.length;
     // Если есть данные о задачах в предыдущей колонке, выводим дропдаун
-    if(previousColumnTasks.length !== 0) {
-      this.dropDown = initDropDown(this.model.index);
-      this.view.setDropDownState(this.dropDown.view.element);
+    if(leftColumnTasks !== 0) {
+      const dropdown = initDropDown(this.model.index);
+      this.view.setDropDownState(dropdown.view.element, () => dropdown.view.toggleVisibility());
+      this.dropDown = dropdown;
       return;
     }
     // Если не выполнено ни одно из условий, блокируем кнопку

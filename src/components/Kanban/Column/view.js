@@ -1,4 +1,4 @@
-import {View} from "../../../core/View";
+import {View} from "@core/View";
 
 export class ColumnView extends View {
   constructor(name) {

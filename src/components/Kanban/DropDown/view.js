@@ -1,18 +1,33 @@
-import {View} from "../../../core/View";
-import plusIcon from "../../../templates/icons/plus.html";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
+import {View} from "@core/View";
 
 export class DropDownView extends View {
-  constructor() {
-    super('div', 'kanban-board__dropdown-wrapper')
+  constructor(listElements) {
+    super('div', 'dropdown hidden');
 
     this.list = document.createElement('ul');
-    this.element.appendChild(this.list);
+    this.list.className = 'dropdown__list';
   }
 
-  createListElement(text) {
-    const listElement = document.createElement('li');
-    this.list.appendChild(listElement);
+  toggleVisibility() {
+    this.element.classList.toggle('hidden')
+  }
+
+  createListElement({text, callback}) {
+    const li = document.createElement('li');
+    li.className = 'dropdown__list-element';
+    li.textContent = text;
+    if (callback) li.addEventListener('click', callback);
+    return li;
+  }
+
+  createList(listElements) {
+    this.element.innerHTML = '';
+    const list = document.createElement('ul');
+    list.className = 'dropdown__list';
+    listElements.forEach(el => {
+      const li = this.createListElement(el);
+      list.appendChild(li);
+    })
+    this.element.appendChild(list);
   }
 }

@@ -1,0 +1,26 @@
+@use '../helpers/mixins' as *;
+
+.user-menu {
+
+  height: 100%;
+  @include flex-center();
+  column-gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+
+  &__avatar {
+    height: 80%;
+    aspect-ratio: 1;
+    background: url("@assets/icons/user-avatar.svg") 50%/cover;
+  }
+
+  &__arrow {
+    margin-top: 3%;
+    height: 25%;
+    aspect-ratio: 1;
+  }
+
+  .dropdown {
+    max-height: 20rem;
+  }
+}

@@ -7,3 +7,8 @@
 @use 'sections/main-section';
 
 @use 'blocks/kanban-board';
+@use 'blocks/admin-panel';
+
+@use 'components/user-menu';
+@use 'components/dropdown';
+@use 'components/dailog';

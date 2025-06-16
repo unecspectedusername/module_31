@@ -1,6 +1,6 @@
-import {Controller} from "../../../core/Controller";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
+import {Controller} from "@core/Controller";
+import {appState} from "@src/app";
+import {EVENTS} from "@core/events";
 import {initTask} from "../Task";
 
 export class TaskListController extends Controller {
@@ -9,7 +9,8 @@ export class TaskListController extends Controller {
 
     // оборачиваем свойство в проски, чтобы эмитить события при изменении
     const self = this;
-    this.savedLinks = new Proxy([], {
+    this._savedLinks = [];
+    this.savedLinks = new Proxy(this._savedLinks, {
       get(target, prop, receiver) {
         const value = Reflect.get(target, prop, receiver);
         const columnIndex = self.model.index;
@@ -43,18 +44,24 @@ export class TaskListController extends Controller {
       }
     });
 
-    appState.eventBus.on(EVENTS.TASK_CREATED, (data) => {
+    this.subscribe(EVENTS.TASK_CREATED, (data) => {
       if (data.columnIndex === this.model.index) {
-        const newTask = initTask(null, this.model.index);
-        this.addChild(newTask);
-        newTask.view.focus();
+        this.makeNewTask()
       }
-    })
+    });
 
-    appState.eventBus.on(EVENTS.TASK_DELETED, (task) => {
+    this.subscribe(EVENTS.TASK_DELETED, (task) => {
       if (task.columnIndex === this.model.index) {
         this.removeLinks(task.controller);
+        appState.eventBus.emit(EVENTS.TASK_LIST_UPDATED);
       }
-    })
+    });
   }
+
+  makeNewTask() {
+    const newTask = initTask(null, this.model.index);
+    this.addChild(newTask);
+    newTask.view.focus();
+  }
+
 }

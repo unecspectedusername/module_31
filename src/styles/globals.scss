@@ -2,13 +2,14 @@
 @use './helpers/mixins' as *;
 
 body {
+  position: relative;
   font-family: var(--font-main);
   font-size: 1.1rem;
   width: 100dvw;
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 header, main, footer {
@@ -24,4 +25,8 @@ header, footer {
 
 .hidden {
   @include visually-hidden();
+}
+
+.rotated {
+  transform: rotate(180deg);
 }

@@ -1,0 +1,63 @@
+@use '../helpers/mixins' as *;
+@use '../variables' as *;
+
+.admin-panel {
+  margin-block: 2rem;
+  @include flex-center(column, center);
+
+  &__table-wrapper {
+    @include flex-center(column, center);
+    background: var(--color-light-grey);
+    border-radius: $column-border-radius;
+  }
+
+  &__header {
+    color: var(--color-white);
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    border-radius: $task-border-radius;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    margin: 1rem;
+    line-height: 1rem;
+    color: var(--color-grey-blue);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    &:hover {
+      transition: background-color 0.4s ease-out;
+      background: var(--color-white);
+    }
+
+    i {
+      display: flex;
+    }
+  }
+}
+
+.table {
+  @include flex-center(column, center);
+
+  &__header, &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    width: 100%;
+    text-align: center;
+  }
+
+  .cell {
+    @include flex-center(row, center);
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  button {
+    border-radius: $task-border-radius;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    background: var(--color-white);
+  }
+}

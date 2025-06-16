@@ -12,6 +12,16 @@ module.exports = {
   devServer: {
     port: 3000,
   },
+  resolve: {
+    alias: {
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@core': path.resolve(__dirname, 'src/core'),
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@templates': path.resolve(__dirname, 'src/templates'),
+      '@src': path.resolve(__dirname, 'src'),
+    },
+  },
   plugins: [
     new HTMLPlugin({
       template: "./src/index.html",
@@ -26,6 +36,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.svg$/i,
+        type: 'asset/resource', // Webpack 5 встроенный способ
       },
       {
         test: /\.s[ac]ss$/i,

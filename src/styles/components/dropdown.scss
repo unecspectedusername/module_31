@@ -1,0 +1,35 @@
+@use '../variables' as *;
+@use '../helpers/mixins' as *;
+
+.dropdown {
+  position: absolute;
+  width: 100%;
+  top: 120%;
+  left: 0;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: block;
+  border-radius: $column-border-radius;
+  max-height: 13rem;
+  overflow-y: scroll;
+}
+
+.dropdown__list {
+  @include flex-center(column);
+  row-gap: 1rem;
+  padding: 0.5rem;
+}
+
+.dropdown__list-element {
+  color: var(--color-black);
+  width: 100%;
+  text-align: center;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  border-radius: $column-border-radius;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown__list-element:hover {
+  background: var(--color-light--light-blue);
+}

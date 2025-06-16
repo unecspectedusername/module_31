@@ -1,9 +1,11 @@
 :root {
   --color-dark-blue: #0067A3;
   --color-light-blue: #0079BF;
+  --color-light--light-blue: #7fb7de;
   --color-light-grey: #EBECF0;
   --color-grey-blue: #5E6C84;
-  --color-white: #FFF;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
 
 
   --font-main: 'Roboto regular', sans-serif;
@@ -11,3 +13,6 @@
 
 $gap: 2rem;
 $header-height: 3.5rem;
+
+$column-border-radius: 1rem;
+$task-border-radius: 0.3rem;

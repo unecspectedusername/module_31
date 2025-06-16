@@ -1,6 +1,6 @@
-import {Controller} from "../../../core/Controller";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
+import {Controller} from "@core/Controller";
+import {appState} from "@src/app";
+import {EVENTS} from "@core/events";
 
 export class TaskController extends Controller {
   constructor(view, model) {
@@ -8,7 +8,7 @@ export class TaskController extends Controller {
   }
 
   init() {
-    this.view.removeButton.addEventListener('click', () => this.remove());
+    this.view.removeButton.addEventListener('click', () => this.delete());
     this.view.textField.addEventListener('focus', () => this.notifyAboutFocus());
     this.view.textField.addEventListener('blur', () => this.validate());
   }
@@ -22,7 +22,7 @@ export class TaskController extends Controller {
     // в течение таймаута клик по кнопке не сработает
     appState.blurFired = true;
     if (!this.view.textField.textContent.trim()) {
-      this.remove()
+      this.delete()
     } else {
       this.update();
     };
@@ -39,14 +39,24 @@ export class TaskController extends Controller {
   }
 
   notifyAboutFocus() {
-    appState.eventBus.emit(EVENTS.TASK_IS_IN_FOCUS, {
-      columnIndex: this.model.columnIndex,
-    })
+    if (!this.view.isDragging) {
+      appState.eventBus.emit(EVENTS.TASK_IS_IN_FOCUS, {
+        columnIndex: this.model.columnIndex,
+      })
+    }
   }
 
-  remove() {
-    this.view.element.remove();
-    appState.instanceManager.removeElement(this);
+  markAsDragged() {
+    this.view.setDraggedState();
+    appState.eventBus.emit(EVENTS.TASK_IS_DRAGGED);
+  }
+
+  unmarkAsDragged() {
+    this.view.unsetDraggedState();
+  }
+
+  delete() {
+    this.remove();
     appState.eventBus.emit(EVENTS.TASK_DELETED, {
       columnIndex: this.model.columnIndex,
       controller: this

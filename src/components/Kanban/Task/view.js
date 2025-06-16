@@ -1,10 +1,12 @@
-import {View} from "../../../core/View";
-import removeIcon from "../../../templates/icons/remove.html";
-import {dragManager} from "../../../core/DragManager";
+import {View} from "@core/View";
+import removeIcon from "@templates/icons/remove.html";
+import {dragManager} from "@core/DragManager";
 
 export class TaskView extends View {
   constructor(text = null) {
     super('li', 'kanban-board__task')
+
+    this.isDragging = false;
 
     this.textField = document.createElement('span');
     this.textField.className = 'kanban-board__text-field';
@@ -19,13 +21,25 @@ export class TaskView extends View {
     dragManager.makeDraggable(this.element);
   }
 
+
+  setDraggedState() {
+    this.element.classList.add('is-dragging')
+    this.isDragging = true;
+  }
+
+  unsetDraggedState() {
+    this.element.classList.remove('is-dragging')
+    this.isDragging = false;
+  }
+
   focus() {
     this.textField.focus();
-    const range = document.createRange();
-    range.selectNodeContents(this.textField);
-    range.collapse(true);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
+    // removeme TODO - остальной код на случай если при тесте обнаружится, что фокус работает некорректно на каких то устройствах. Если все будет ок, код можно удалить
+    // const range = document.createRange();
+    // range.selectNodeContents(this.textField);
+    // range.collapse(true);
+    // const sel = window.getSelection();
+    // sel.removeAllRanges();
+    // sel.addRange(range);
   }
 }

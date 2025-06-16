@@ -1,0 +1,45 @@
+@use '../variables' as *;
+@use '../helpers/mixins' as *;
+
+.dialog {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  @include flex-center(column, center);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+
+  &__window {
+    @include flex-center(column, center);
+    gap: 2rem;
+    min-width: 40%;
+    background: var(--color-light-grey);
+    border-radius: $column-border-radius;
+    padding: 2rem;
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  &__form {
+    @include flex-center(column, center);
+    gap: 2rem;
+
+    label {
+      @include flex-center(column, center);
+      width: 100%;
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+
+  &__button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

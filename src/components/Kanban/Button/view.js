@@ -1,7 +1,7 @@
-import {View} from "../../../core/View";
+import {View} from "@core/View";
 import plusIcon from "../../../templates/icons/plus.html";
-import {appState} from "../../../app";
-import {EVENTS} from "../../../core/events";
+import {appState} from "@src/app";
+import {EVENTS} from "@core/events";
 
 export class ButtonView extends View {
   constructor() {
@@ -16,12 +16,12 @@ export class ButtonView extends View {
     this._listeners = [];
   }
 
-  addEventListener(type, callback, options) {
+  addButtonListener(type, callback, options) {
     this._listeners.push({type, callback, options});
     this.button.addEventListener(type, callback, options);
   }
 
-  removeAllListeners() {
+  removeButtonListeners() {
     for (const {type, callback, options} of this._listeners) {
       this.button.removeEventListener(type, callback, options);
     }
@@ -35,11 +35,11 @@ export class ButtonView extends View {
   }
 
   createTemplate({
-                ariaLabel = 'Add card',
-                className = 'kanban-board__button',
-                icon = true,
-                textContent = 'Add card'
-              } = {}) {
+                   ariaLabel = 'Add card',
+                   className = 'kanban-board__button',
+                   icon = true,
+                   textContent = 'Add card'
+                 } = {}) {
     this.clear();
     this.button.setAttribute('aria-label', ariaLabel);
     this.button.className = className;
@@ -58,23 +58,28 @@ export class ButtonView extends View {
   }
 
   setSubmitState() {
-      this.clear();
-      this.button.setAttribute('aria-label', 'Submit');
-      this.button.className = 'kanban-board__button--submit';
-      this.button.innerHTML = 'Submit';
-      this.state = 'submit';
+    this.clear();
+    this.button.setAttribute('aria-label', 'Submit');
+    this.button.className = 'kanban-board__button--submit';
+    this.button.innerHTML = 'Submit';
+    this.state = 'submit';
   }
 
   setDisabledState() {
+    this.clear();
+    this.removeButtonListeners();
     this.setDefaultState();
+    this.button.classList.add('disabled');
     this.element.disabled = true;
     this.state = 'disabled';
   }
 
-  setDropDownState(dropDownElement) {
+  setDropDownState(dropDownElement, callback) {
+    this.clear();
     this.setDefaultState();
+    this.removeButtonListeners();
     this.element.appendChild(dropDownElement);
     this.state = 'dropdown'
+    this.addButtonListener('click', callback)
   }
-
 }
