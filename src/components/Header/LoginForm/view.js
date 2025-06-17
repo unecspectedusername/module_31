@@ -23,7 +23,7 @@ export class LoginFormView extends View {
     })
 
     this.button = document.createElement('button');
-    this.button.className = 'navbar-toggler';
+    this.button.className = 'login-form__button button';
     this.button.setAttribute('type', 'submit');
     this.button.setAttribute('aria-label', 'Toggle navigation');
     this.button.textContent = 'Sign in';

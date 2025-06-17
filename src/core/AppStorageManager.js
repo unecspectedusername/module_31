@@ -6,14 +6,18 @@ export class AppStorageManager {
     return JSON.parse(localStorage.getItem(key) || "[]");
   };
 
-  setItem(data, key) {
-    localStorage.setItem(key, JSON.stringify(data));
+  setItem(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
-  addToStorage(obj, key) {
+  getItem(key) {
+    return localStorage.getItem(key);
+  }
+
+  addToStorage(key, obj) {
     const storageData = this.getFromStorage(key);
     storageData.push(obj);
-    this.setItem(storageData, key)
+    this.setItem(key, storageData);
   };
 
   clear() {

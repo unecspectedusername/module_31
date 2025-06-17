@@ -5,6 +5,25 @@
 .header {
   @include flex-between();
   height: $header-height;
+
+  .login-form {
+    @include flex-center(row, center);
+    column-gap: 1rem;
+
+    &__button {
+      background: var(--color-light-blue);
+      color: var(--color-white);
+      padding-block: 0.1rem;
+      padding-inline: 1rem;
+      border-radius: $task-border-radius;
+      white-space: nowrap;
+
+      &:hover {
+        transition: opacity ease-in-out 0.4s;
+        opacity: 0.5;
+      }
+    }
+  }
 }
 
 .navigation {
@@ -18,7 +37,19 @@
 @include mobile {
 
   .header {
-    flex-direction: row-reverse;
+    height: auto;
+    justify-content: center;
+
+    .login-form {
+      width: 100%;
+      flex-direction: column;
+      row-gap: 1rem;
+      padding: 1rem;
+    }
+
+    .user-menu {
+      max-height: 3rem;
+    }
   }
   .navigation {
     @include visually-hidden;

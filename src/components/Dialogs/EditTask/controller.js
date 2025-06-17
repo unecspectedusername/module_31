@@ -1,4 +1,3 @@
-import {User} from "@core/User";
 import {BasicDialogController} from "@components/Dialogs/BasicDialog/controller";
 
 export class EditTaskController extends BasicDialogController {
@@ -13,8 +12,6 @@ export class EditTaskController extends BasicDialogController {
 
     this.view.form.addEventListener('submit', (e) => this.submitForm(e));
   }
-
-  check
 
   submitForm(event) {
     event.preventDefault()

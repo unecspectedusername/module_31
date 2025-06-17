@@ -25,7 +25,7 @@ export class User extends BaseModel {
 
   static save(user) {
     try {
-      storageManager.addToStorage(user, user.storageKey);
+      storageManager.addToStorage(user.storageKey, user);
       return true;
     } catch (e) {
       throw new Error(e);
@@ -36,6 +36,6 @@ export class User extends BaseModel {
     const storageKey = appState.currentUser.storageKey;
     let users = storageManager.getFromStorage(storageKey);
     users = users.filter(u => u.id !== userId);
-    storageManager.setItem(users, storageKey);
+    storageManager.setItem(storageKey, users);
   }
 }

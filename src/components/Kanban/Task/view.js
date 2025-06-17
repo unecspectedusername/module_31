@@ -1,5 +1,4 @@
 import {View} from "@core/View";
-import removeIcon from "@templates/icons/remove.html";
 import {dragManager} from "@core/DragManager";
 import template from './template.html';
 
@@ -33,12 +32,5 @@ export class TaskView extends View {
 
   focus() {
     this.textField.focus();
-    // removeme TODO - остальной код на случай если при тесте обнаружится, что фокус работает некорректно на каких то устройствах. Если все будет ок, код можно удалить
-    // const range = document.createRange();
-    // range.selectNodeContents(this.textField);
-    // range.collapse(true);
-    // const sel = window.getSelection();
-    // sel.removeAllRanges();
-    // sel.addRange(range);
   }
 }

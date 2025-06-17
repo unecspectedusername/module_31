@@ -3,7 +3,6 @@ import {EditTaskModel} from "@components/Dialogs/EditTask/model";
 import {EditTaskView} from "@components/Dialogs/EditTask/view";
 
 export function initEditTask (initiatorController) {
-  console.log(initiatorController);
   const header = initiatorController.model.header;
   const body = initiatorController.model.body;
   const model = new EditTaskModel(initiatorController);

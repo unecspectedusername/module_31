@@ -148,5 +148,9 @@ $padding: 0.75rem;
 @include mobile {
   .kanban-board {
     flex-direction: column;
+
+    &__task-button {
+      opacity: 1;
+    }
   }
 }

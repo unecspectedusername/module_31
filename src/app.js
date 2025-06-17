@@ -11,9 +11,12 @@ export const appController = new AppController();
 
 export const storageManager = new AppStorageManager();
 
-generateTestUser(User);
-changeContent(defaultTemplate);
+if (!appState.checkSaveDataSetting()) {
+  generateTestUser(User);
+}
+
+appController.changeContent(defaultTemplate);
 
 appController.renderLoginForm();
-//removeme мгновенный логин для теста
-appController.instantLogin();
+
+appController.renderFloatingToggle();

@@ -9,11 +9,9 @@ export class DropDownView extends View {
 
     this.element.addEventListener('click', (e) => {
       if (e.target !== this.element) {
-        console.log('clicked')
         this.toggleVisibility();
       }
     })
-
   }
 
   toggleVisibility() {

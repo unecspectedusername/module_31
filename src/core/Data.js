@@ -80,19 +80,19 @@ export default class Data {
       const storedData = storageManager.getFromStorage(this.storageKey);
       const index = storedData.findIndex(el => el.userId === this.id);
       storedData[index].content = newContent;
-      storageManager.setItem(storedData, this.storageKey);
+      storageManager.setItem(this.storageKey, storedData);
     } else {
       const data = {
         userId: this.id,
         content: newContent
       };
-      storageManager.addToStorage(data, this.storageKey)
+      storageManager.addToStorage(this.storageKey, data)
     }
   }
 
   delete(userId) {
     let data = storageManager.getFromStorage(this.storageKey);
     data = data.filter(d => d.userId !== userId);
-    storageManager.setItem(data, this.storageKey);
+    storageManager.setItem(this.storageKey, data);
   }
 }

@@ -14,6 +14,7 @@ import {initUserMenu} from "@components/Header/UserMenu";
 import {initAdminPanel} from "@components/AdminPanel/Panel";
 import {initTaskCounter} from "@components/Footer/TaskCounter";
 import {initUserCard} from "@components/AdminPanel/UserCard";
+import {initFloatingToggle} from "@components/FloatingToggle";
 
 export class AppController {
   constructor() {
@@ -37,18 +38,17 @@ export class AppController {
     return true;
   };
 
-  //removeme метод для мгновенного логина для теста
-  instantLogin() {
-    this.signIn('test3', '123');
-  }
-
   signIn(user, password) {
     if (this.checkUserCredentials(user, password)) {
       this.renderUserMenu();
       this.renderBoard(appState.data);
     } else {
-      changeContent(noAccessTemplate)
+      this.changeContent(noAccessTemplate)
     }
+  }
+
+  changeContent(newContent) {
+    this.mainContent.innerHTML = newContent;
   }
 
   signOut() {
@@ -153,5 +153,10 @@ export class AppController {
     if (this.taskCounter) this.taskCounter.remove();
     this.taskCounter = initTaskCounter();
     this.footer.prepend(this.taskCounter.view.element);
+  }
+
+  renderFloatingToggle() {
+    const floatingToggle = initFloatingToggle();
+    document.body.appendChild(floatingToggle.view.element);
   }
 }

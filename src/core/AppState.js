@@ -1,5 +1,6 @@
 import InstanceManager from "./InstanceManager";
 import {EventEmitter} from "./EventEmitter";
+import {storageManager} from "@src/app";
 
 export class AppState {
   constructor() {
@@ -25,6 +26,10 @@ export class AppState {
 
   get currentUser() {
     return this._currentUser;
+  }
+
+  checkSaveDataSetting() {
+    return storageManager.getItem('saveData') === 'true';
   }
 
   clear() {
