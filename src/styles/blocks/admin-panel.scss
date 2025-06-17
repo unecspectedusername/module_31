@@ -18,18 +18,19 @@
 
   &__button {
     border-radius: $task-border-radius;
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    margin: 1rem;
+    padding-inline: 2rem;
+    padding-block: 1rem;
+    margin-bottom: 1rem;
     line-height: 1rem;
-    color: var(--color-grey-blue);
     display: flex;
     align-items: center;
     gap: 0.5em;
+    background: var(--color-light-blue);
+    color: var(--color-white);
 
     &:hover {
-      transition: background-color 0.4s ease-out;
-      background: var(--color-white);
+      transition: opacity 0.4s ease-out;
+      opacity: 0.5;
     }
 
     i {
@@ -40,12 +41,14 @@
 
 .table {
   @include flex-center(column, center);
+  padding: 1rem;
 
   &__header, &__row {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
     width: 100%;
     text-align: center;
+    border-bottom: 1px dashed var(--color-light--light-blue);
   }
 
   .cell {

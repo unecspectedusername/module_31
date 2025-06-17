@@ -17,10 +17,13 @@ header, main, footer {
 }
 
 header, footer {
-  height: 3.5rem;
   padding-inline: $gap;
   color: white;
   background: var(--color-dark-blue);
+}
+
+button:hover:not(.disabled) {
+  cursor: pointer;
 }
 
 .hidden {

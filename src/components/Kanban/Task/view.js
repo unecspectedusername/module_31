@@ -1,22 +1,21 @@
 import {View} from "@core/View";
 import removeIcon from "@templates/icons/remove.html";
 import {dragManager} from "@core/DragManager";
+import template from './template.html';
 
 export class TaskView extends View {
-  constructor(text = null) {
+  constructor(taskHeader = null) {
     super('li', 'kanban-board__task')
 
-    this.isDragging = false;
+    this.element.innerHTML = template;
 
-    this.textField = document.createElement('span');
-    this.textField.className = 'kanban-board__text-field';
-    this.textField.setAttribute('contenteditable', 'true');
-    this.element.appendChild(this.textField);
-    if (text) this.textField.textContent = text;
-    this.removeButton = document.createElement('button');
-    this.removeButton.className = 'kanban-board__remove-button';
-    this.removeButton.innerHTML = removeIcon;
-    this.element.appendChild(this.removeButton);
+    this.textField = this.element.querySelector('[data-el="text"]');
+    this.editButton = this.element.querySelector('[data-el="edit"]');
+    this.removeButton = this.element.querySelector('[data-el="remove"]');
+
+    this.textField.textContent = taskHeader;
+
+    this.isDragging = false;
 
     dragManager.makeDraggable(this.element);
   }

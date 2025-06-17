@@ -15,6 +15,7 @@ export class ButtonController extends Controller {
       this.subscribe(EVENTS.TASK_IS_DRAGGED, () => this.view.setDefaultState());
       this.subscribe(EVENTS.TASK_LIST_UPDATED, () => this.checkColumn());
       this.subscribe(EVENTS.TASK_UPDATED, (data) => {
+        this.checkColumn();
         if (data.columnIndex === this.model.index) {
           this.view.setDefaultState();
         }
@@ -30,7 +31,7 @@ export class ButtonController extends Controller {
   handleClick() {
     const state = this.view.state;
 
-    if(state === 'default' && !appState.blurFired) {
+    if (state === 'default' && !appState.blurFired) {
       appState.eventBus.emit(EVENTS.TASK_CREATED, {
         columnIndex: this.model.index
       })
@@ -50,7 +51,7 @@ export class ButtonController extends Controller {
     const leftColumn = appState.instanceManager.findInstanceByIndex(TaskListController, this.model.index - 1);
     const leftColumnTasks = leftColumn._savedLinks.length;
     // Если есть данные о задачах в предыдущей колонке, выводим дропдаун
-    if(leftColumnTasks !== 0) {
+    if (leftColumnTasks !== 0) {
       const dropdown = initDropDown(this.model.index);
       this.view.setDropDownState(dropdown.view.element, () => dropdown.view.toggleVisibility());
       this.dropDown = dropdown;

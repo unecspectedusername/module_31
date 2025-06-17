@@ -116,7 +116,7 @@ export class AppController {
     // Создаем задачи
     data.stored.content.forEach((column, index) => {
       column.tasks.forEach(task => {
-        const newTask = initTask(task, index);
+        const newTask = initTask(task.header, task.body, index);
         taskLists[index].addChild(newTask);
       })
     })

@@ -1,4 +1,4 @@
-import {appState, storageManager} from "../app";
+import {appState} from "../app";
 import {EVENTS} from "@core/events";
 
 class DragManager {

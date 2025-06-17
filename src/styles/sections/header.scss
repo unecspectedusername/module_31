@@ -1,5 +1,6 @@
 @use "../helpers/mixins" as *;
 @use "../variables" as *;
+@use '../helpers/media' as *;
 
 .header {
   @include flex-between();
@@ -11,5 +12,15 @@
   &__link {
     text-decoration: none;
     color: var(--color-white);
+  }
+}
+
+@include mobile {
+
+  .header {
+    flex-direction: row-reverse;
+  }
+  .navigation {
+    @include visually-hidden;
   }
 }

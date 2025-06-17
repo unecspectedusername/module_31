@@ -6,6 +6,14 @@ export class DropDownView extends View {
 
     this.list = document.createElement('ul');
     this.list.className = 'dropdown__list';
+
+    this.element.addEventListener('click', (e) => {
+      if (e.target !== this.element) {
+        console.log('clicked')
+        this.toggleVisibility();
+      }
+    })
+
   }
 
   toggleVisibility() {

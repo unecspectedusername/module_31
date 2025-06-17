@@ -1,5 +1,3 @@
-import {appState, storageManager} from "../app";
-
 export const generateTestUser = function (User) {
   localStorage.clear();
   const testUser = new User("test", "123");

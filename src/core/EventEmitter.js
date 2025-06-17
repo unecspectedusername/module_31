@@ -6,7 +6,7 @@ export class EventEmitter {
   on(event, callback) {
     //removeme логирование подписки на событие
     // console.log(`[on] Subscribed to "${event}"`, this._getCallerInfo());
-    if(!this.listeners[event]) this.listeners[event] = new Set();
+    if (!this.listeners[event]) this.listeners[event] = new Set();
     this.listeners[event].add(callback);
   }
 
@@ -16,7 +16,7 @@ export class EventEmitter {
     // window.__eventLog = window.__eventLog || [];
     // window.__eventLog.push(info);
     // console.log(`[emit]`, info);
-    if(this.listeners[event]) {
+    if (this.listeners[event]) {
       for (const callback of this.listeners[event]) {
         callback(...args);
       }

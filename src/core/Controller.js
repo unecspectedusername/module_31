@@ -51,7 +51,7 @@ export class Controller extends Component {
 
   remove() {
     this.unsubscribe();
-    if(this.savedLinks.length !== 0) {
+    if (this.savedLinks.length !== 0) {
       this.savedLinks.forEach(link => {
         link.unsubscribe();
         link.remove();

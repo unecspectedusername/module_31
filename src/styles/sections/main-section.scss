@@ -1,8 +1,9 @@
 @use '../variables' as *;
+@use '../helpers/media' as *;
 
 .main-section {
   width: 100%;
-  height: calc(100vh - ($header-height * 2));
+  height: calc(100dvh - ($header-height * 2));
   overflow-y: auto;
   background: var(--color-light-blue);
 
@@ -10,5 +11,11 @@
     color: white;
     margin: 2rem;
     text-align: center;
+  }
+}
+
+@include mobile {
+  .main-section {
+    height: calc(100dvh - ($header-height + $mobile-footer-height));
   }
 }

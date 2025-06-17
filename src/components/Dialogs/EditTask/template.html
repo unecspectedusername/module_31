@@ -1,0 +1,43 @@
+<div class="dialog__window edit-task">
+  <form
+    method="dialog"
+    class="dialog__form"
+    data-el="form"
+  >
+    <h3>Edit Task</h3>
+
+    <label>
+      Task header
+      <input
+        type="text"
+        name="header"
+        autocomplete="off"
+        data-el="header"
+      />
+    </label>
+
+    <label>
+      Text
+      <textarea
+        name="body"
+        placeholder="Enter the task text"
+        data-el="body"
+      ></textarea>
+    </label>
+
+    <div class="dialog__button-wrapper">
+      <button
+        type="button"
+        value="cancel"
+        data-el="cancel"
+      >Cancel
+      </button>
+      <button
+        type="submit"
+        value="submit"
+        data-el="submit"
+      >Submit
+      </button>
+    </div>
+  </form>
+</div>

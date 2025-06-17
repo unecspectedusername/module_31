@@ -1,8 +1,5 @@
 import {appState} from "../app";
-import {TaskController} from "../components/Kanban/Task/controller";
 import {TaskListController} from "../components/Kanban/TaskList/controller";
-import {ColumnController} from "../components/Kanban/Column/controller";
-import {initLoginForm} from "@components/Header/LoginForm";
 import {EVENTS} from "@core/events";
 
 export default class InstanceManager {
@@ -79,7 +76,7 @@ export default class InstanceManager {
       clone.addEventListener('transitionend', () => {
         clone.remove();
         element.style.visibility = 'visible';
-      }, { once: true });
+      }, {once: true});
     });
   }
 
@@ -91,9 +88,5 @@ export default class InstanceManager {
     const newListController = this.getController(newList);
     // Перемещаем задачу
     this.moveTask(taskController, newListController, index);
-  }
-
-  removeElement(controller) {
-    appState.instanceMap.delete(controller);
   }
 }

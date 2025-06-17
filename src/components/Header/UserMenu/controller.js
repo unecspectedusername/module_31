@@ -1,6 +1,5 @@
 import {Controller} from "@core/Controller";
 import {appController, appState} from "@src/app";
-import Data from "@core/Data";
 
 export class UserMenuController extends Controller {
   constructor(view, model) {

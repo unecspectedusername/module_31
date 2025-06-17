@@ -1,6 +1,6 @@
 import {View} from "@core/View";
 
-export class UserMenuView extends View{
+export class UserMenuView extends View {
   constructor(userName) {
     super('div', 'user-menu');
 
@@ -81,7 +81,7 @@ export class UserMenuView extends View{
   }
 
   createMenu(isAdmin) {
-    const listElements = this.creatList( 'Settings', 'Billing');
+    const listElements = this.creatList('Settings', 'Billing');
     listElements.push(this.createMyTasksButton());
     if (isAdmin) listElements.push(this.createAdminButton());
     listElements.push(this.createSignOutButton());

@@ -1,9 +1,9 @@
-import {View} from "@core/View";
 import template from './template.html';
+import {BasicDialogView} from "@components/Dialogs/BasicDialog/view";
 
-export class CreateNewUserView extends View {
+export class CreateNewUserView extends BasicDialogView {
   constructor() {
-    super('div', 'dialog');
+    super();
 
     this.element.innerHTML = template;
 
@@ -11,10 +11,6 @@ export class CreateNewUserView extends View {
 
     this.cancelButton = this.element.querySelector('[data-el="cancel"]');
     this.createButton = this.element.querySelector('[data-el="create"]');
-  }
-
-  addBackDropAction(event, callback) {
-    this.element.addEventListener(event, callback);
   }
 
   addCancelAction(event, callback) {

@@ -1,6 +1,6 @@
 import {BasicDialogModel} from "@components/Dialogs/BasicDialog/model";
 
-export class CreateNewUserModel extends BasicDialogModel {
+export class EditTaskModel extends BasicDialogModel {
   constructor(initiatorController) {
     super(initiatorController);
   }

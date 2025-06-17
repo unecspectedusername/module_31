@@ -1,7 +1,5 @@
 import {View} from "@core/View";
 import plusIcon from "../../../templates/icons/plus.html";
-import {appState} from "@src/app";
-import {EVENTS} from "@core/events";
 
 export class ButtonView extends View {
   constructor() {

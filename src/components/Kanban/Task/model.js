@@ -1,14 +1,14 @@
 import {Model} from "@core/Model";
 
-export class TaskModel extends Model{
-  constructor(columnIndex, text) {
+export class TaskModel extends Model {
+  constructor(taskHeader, taskBody, columnIndex) {
     super();
 
     //removeme логирование свойства индекса
     this._columnIndex = columnIndex;
 
-    // this.columnIndex = columnIndex;
-    this.text = text;
+    this.header = taskHeader;
+    this.body = taskBody;
   }
 
   //removeme логирование свойства индекса

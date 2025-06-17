@@ -1,30 +1,61 @@
-
 <div class="dialog__window">
-  <form method="dialog" class="dialog__form" data-el="form">
+  <form
+    method="dialog"
+    class="dialog__form"
+    data-el="form"
+  >
     <h3>Create New User</h3>
 
     <label>
       User Login:
-      <input type="text" name="login" required autocomplete="off" />
+      <input
+        type="text"
+        name="login"
+        required
+        autocomplete="off"
+      />
     </label>
 
     <label>
       Password:
-      <input type="password" name="password" required autocomplete="off" />
+      <input
+        type="password"
+        name="password"
+        required
+        autocomplete="off"
+      />
     </label>
 
     <label>
       Role:
-      <select name="role" required>
-        <option value="" disabled selected>Select Role</option>
+      <select
+        name="role"
+        required
+      >
+        <option
+          value=""
+          disabled
+          selected
+        >Select Role
+        </option>
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>
     </label>
 
     <div class="dialog__button-wrapper">
-      <button type="button" id="cancelBtn" data-el="cancel">Cancel</button>
-      <button type="submit" value="create" data-el="create">Create</button>
+      <button
+        type="button"
+        id="cancelBtn"
+        data-el="cancel"
+      >Cancel
+      </button>
+      <button
+        type="submit"
+        value="create"
+        data-el="create"
+      >Create
+      </button>
     </div>
   </form>
 </div>

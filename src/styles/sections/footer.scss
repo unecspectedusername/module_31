@@ -1,5 +1,6 @@
 @use "../helpers/mixins" as *;
 @use "../variables" as *;
+@use '../helpers/media' as *;
 
 footer {
   @include flex-between();
@@ -8,5 +9,13 @@ footer {
   .counters-wrapper {
     gap: $gap;
     @include flex();
+  }
+}
+
+@include mobile {
+  footer {
+    flex-direction: column;
+    padding-block: 1rem;
+    height: auto;
   }
 }

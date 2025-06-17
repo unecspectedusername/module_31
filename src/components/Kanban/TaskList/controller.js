@@ -21,7 +21,7 @@ export class TaskListController extends Controller {
 
             // Если колонка была пустой, и мы добавили задачу
             // эмитим событие
-            if(initialLength === 0) {
+            if (initialLength === 0) {
               appState.eventBus.emit(EVENTS.COLUMN_NOT_EMPTY, {
                 columnIndex,
                 tasks: target,
@@ -59,7 +59,7 @@ export class TaskListController extends Controller {
   }
 
   makeNewTask() {
-    const newTask = initTask(null, this.model.index);
+    const newTask = initTask(null, null, this.model.index);
     this.addChild(newTask);
     newTask.view.focus();
   }

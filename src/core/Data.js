@@ -12,9 +12,6 @@ export default class Data {
 
     this.subscribe(EVENTS.TASK_UPDATED, () => this.save());
     this.subscribe(EVENTS.TASK_LIST_UPDATED, () => this.save());
-
-    // appState.eventBus.on(EVENTS.TASK_UPDATED, () => this.save());
-    // appState.eventBus.on(EVENTS.TASK_LIST_UPDATED, () => this.save());
   }
 
   subscribe(event, callback) {
@@ -35,8 +32,6 @@ export default class Data {
     data.content = columns.map(column => {
       return {
         name: column,
-        // removeme убери данные из массива
-        // tasks: ['Test 1', 'Test 2', 'Test 3'],
         tasks: []
       }
     })
@@ -60,7 +55,10 @@ export default class Data {
       taskLists.forEach(list => {
         if (list.model.index === column.model.index) {
           list.model.savedLinks.forEach(link => {
-            result.tasks.push(link.text);
+            result.tasks.push({
+              header: link.header,
+              body: link.body
+            });
           })
         }
       })
@@ -75,6 +73,7 @@ export default class Data {
     if (storedData.some(el => el.userId === this.id)) return true;
     return false
   }
+
   save() {
     const newContent = this.update();
     if (this.alreadyExists) {
@@ -94,7 +93,6 @@ export default class Data {
   delete(userId) {
     let data = storageManager.getFromStorage(this.storageKey);
     data = data.filter(d => d.userId !== userId);
-    console.log('new data', data);
     storageManager.setItem(data, this.storageKey);
   }
 }

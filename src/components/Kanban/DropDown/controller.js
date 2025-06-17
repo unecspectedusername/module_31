@@ -36,7 +36,7 @@ export class DropDownController extends Controller {
     this.model.relatedTasks.forEach(taskController => {
       const obj = {};
       const self = this;
-      obj.text = taskController.view.textField.textContent;
+      obj.text = taskController.model.header;
       obj.callback = function () {
         appState.instanceManager.moveTask(taskController, self.model.ownTaskList);
         appState.instanceManager.moveTaskInDOM(taskController, self.model.ownTaskList);

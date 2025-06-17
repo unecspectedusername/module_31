@@ -30,6 +30,7 @@ export class LoginFormView extends View {
 
     [this.loginInput, this.passwordInput, this.button].forEach(element => this.element.appendChild(element));
   };
+
   makeInput(attrs = {}) {
     const input = document.createElement('input');
 

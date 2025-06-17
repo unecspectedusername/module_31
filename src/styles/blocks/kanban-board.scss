@@ -1,5 +1,6 @@
 @use '../helpers/mixins' as *;
 @use '../variables' as *;
+@use '../helpers/media' as *;
 
 $padding: 0.75rem;
 
@@ -8,7 +9,6 @@ $padding: 0.75rem;
   gap: $gap;
   padding: $gap;
   align-items: flex-start;
-  height: 100%;
 
   &__column {
     @include flex(column, left);
@@ -39,7 +39,7 @@ $padding: 0.75rem;
     background: var(--color-white);
     border-radius: $task-border-radius;
 
-    &:hover .kanban-board__remove-button {
+    &:hover .kanban-board__task-button {
       opacity: 1;
     }
 
@@ -57,15 +57,19 @@ $padding: 0.75rem;
     }
   }
 
-  &__remove-button {
+  &__task-button {
     color: var(--color-grey-blue);
     position: absolute;
-    right: 0.5rem;
+    right: 2rem;
     top: 50%;
     transform: translateY(-50%);
     @include flex-center();
     opacity: 0;
     transition: opacity 0.4s ease;
+
+    &:last-child {
+      right: 0.5rem;
+    }
 
     & > svg {
       height: 1rem;
@@ -138,5 +142,11 @@ $padding: 0.75rem;
 
   .disabled {
     opacity: 0.3;
+  }
+}
+
+@include mobile {
+  .kanban-board {
+    flex-direction: column;
   }
 }

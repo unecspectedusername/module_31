@@ -1,8 +1,4 @@
 import {View} from "@core/View";
-import {appController, appState} from "@src/app";
-import {ColumnController} from "@components/Kanban/Column/controller";
-import {TaskController} from "@components/Kanban/Task/controller";
-import {EVENTS} from "@core/events";
 
 export class TaskCounterView extends View {
   constructor() {

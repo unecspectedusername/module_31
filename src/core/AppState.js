@@ -1,4 +1,3 @@
-import Data from "./Data";
 import InstanceManager from "./InstanceManager";
 import {EventEmitter} from "./EventEmitter";
 
